@@ -1,31 +1,15 @@
-// A make.fun frontend: the board of open bounties and a page for each, on hash routes.
-//
-//   #/                the board
-//   #/bounty/<slug>   one bounty
-//
-// window.__shotReady is false while a page loads and true once its data is on screen, so a
-// screenshot script knows when to capture.
+// Boot the app: the header's account search, then the hash router.
+// No framework, no build step — the modules under app/ are the whole app.
 
-import { getBounties, getBounty } from './api.js';
-import { board, bounty } from './views.js';
+import { start } from './router.js';
 
-const app = document.getElementById('app');
+const search = document.getElementById('profile-search');
+const handleInput = document.getElementById('handle-input');
 
-async function render() {
-  window.__shotReady = false;
-  app.innerHTML = '<p>Loading…</p>';
-  const match = location.hash.match(/^#\/bounty\/([^/]+)/);
-  if (match) {
-    const b = await getBounty(decodeURIComponent(match[1]));
-    document.title = `${b.title} | make.fun bounties`;
-    app.innerHTML = bounty(b);
-  } else {
-    document.title = 'make.fun bounties';
-    app.innerHTML = board(await getBounties());
-  }
-  window.scrollTo(0, 0);
-  window.__shotReady = true;
-}
+search?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const handle = handleInput.value.trim().replace(/^@/, '');
+  if (handle) location.hash = `#/u/${encodeURIComponent(handle)}`;
+});
 
-window.addEventListener('hashchange', render);
-render();
+start();

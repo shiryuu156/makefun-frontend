@@ -3,12 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A fast, dependency-free frontend for make.fun bounties: the live bounty board, bounty pages, leaderboards and public profiles, all from make.fun's public API.">
 <title>make.fun bounties</title>
 <link rel="stylesheet" href="style.css">
 <script type="module" src="main.js"></script>
 </head>
 <body>
-<header><a href="#/">make.fun bounties</a></header>
-<main id="app"></main>
+<header class="topbar">
+  <a class="brand" href="#/">make<span>.fun</span> bounties</a>
+  <nav class="topnav" aria-label="Main">
+    <a href="#/" data-nav="board">Board</a>
+    <a href="#/bounty/makefun-frontend-01" data-nav="featured">This bounty</a>
+  </nav>
+  <form id="profile-search" class="profile-search" role="search" action="#/u/">
+    <label class="visually-hidden" for="handle-input">Find an account</label>
+    <input id="handle-input" name="handle" type="search" placeholder="Find an account…" autocomplete="off" spellcheck="false">
+    <button type="submit">Go</button>
+  </form>
+</header>
+<main id="app" aria-live="polite"></main>
+<footer class="pagefoot">
+  <p>Unofficial frontend. Data comes live from <a href="https://make.fun">make.fun</a>&rsquo;s public API — no sign-in, nothing is written back. Times are UTC.</p>
+</footer>
 </body>
 </html>
